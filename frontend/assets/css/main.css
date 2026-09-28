@@ -248,9 +248,9 @@ select {
 
   width: calc(100% - 24px);
 
-  margin: auto 12px 15px;
+  /* margin: auto 12px 15px; */
 
-  padding: 8px 4px;
+  padding: 8px 24px;
 
   border: 0;
 
@@ -258,7 +258,7 @@ select {
 
   color: var(--danger);
 
-  font-size: 10px;
+  font-size: 14px;
 
   font-weight: 600;
 
@@ -266,7 +266,7 @@ select {
 }
 
 .logout i {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 /* =========================================================
@@ -290,7 +290,7 @@ select {
 
   align-items: center;
 
-  justify-content: space-between;
+  justify-content: flex-end;
 
   width: 100%;
 
@@ -393,6 +393,8 @@ select {
   height: 30px;
 
   padding: 0 10px;
+
+  margin-left: auto;
 
   border: 1px solid var(--border);
 
@@ -1540,12 +1542,12 @@ select {
   margin-bottom: 8px;
 }
 
-.Comppic{
-     width: 100%;
+.Comppic {
+  width: 100%;
 
-    height: auto;
+  height: auto;
 
-    display: block;
+  display: block;
 }
 
 .success-title {

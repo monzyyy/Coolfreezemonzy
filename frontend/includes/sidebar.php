@@ -18,19 +18,19 @@ $sidebarMenu = [
     [
         'title' => 'Services',
         'items' => [
-            ['key' => 'services', 'label' => 'Services', 'icon' => 'fa-screwdriver-wrench', 'link' => '?page=services'],
+            ['key' => 'services', 'label' => 'Services', 'icon' => 'fa-screwdriver-wrench', 'link' => '?page=services_main'],
         ],
     ],
     [
         'title' => 'Cart',
         'items' => [
-            ['key' => 'cart', 'label' => 'Service Cart', 'icon' => 'fa-cart-shopping', 'link' => 'cart.php'],
+            ['key' => 'cart', 'label' => 'Service Cart', 'icon' => 'fa-cart-shopping', 'link' => '?page=cart_main'],
         ],
     ],
     [
         'title' => 'Service Requests',
         'items' => [
-            ['key' => 'requests', 'label' => 'My Requests', 'icon' => 'fa-clipboard-list', 'link' => 'requests.php'],
+            ['key' => 'requests', 'label' => 'My Requests', 'icon' => 'fa-clipboard-list', 'link' => '?page=request_main'],
         ],
     ],
     [
@@ -60,7 +60,7 @@ $sidebarMenu = [
 
         <p class="menu-title">Dashboard</p>
 
-        <a href="<?= e($sidebarPagesUrl) ?>?page=home" class="menu-link <?= $currentPage === 'home' ? 'active' : '' ?>">
+        <a href="<?= e($sidebarPagesUrl) ?>?page=home_main" class="menu-link <?= $currentPage === 'home' ? 'active' : '' ?>">
             <i class="fa-solid fa-house"></i>
             Home
         </a>
@@ -90,5 +90,6 @@ $sidebarMenu = [
             Log out
         </button>
     </form>
+
 
 </aside>

@@ -6,39 +6,8 @@ require_once dirname(__DIR__, 3) . '/backend/bootstrap.php';
 
 // Log in name ng customer: example - markesg
 $userName = $_SESSION['username'] ?? 'Customer';
-
 $currentPage = 'home';
 
-// Sidebar menu 
-$menu = [
-    [
-        'title' => 'Services',
-        'items' => [
-            ['label' => 'Services', 'icon' => 'fa-screwdriver-wrench', 'link' => 'servicesmain.php'],
-        ]
-    ],
-    [
-        'title' => 'Cart',
-        'items' => [
-            ['label' => 'Service Cart', 'icon' => 'fa-cart-shopping', 'link' => 'cart.php'],
-        ]
-    ],
-    [
-        'title' => 'Service Requests',
-        'items' => [
-            ['label' => 'My Requests', 'icon' => 'fa-clipboard-list', 'link' => 'requests.php'],
-        ]
-    ],
-    [
-        'title' => 'System',
-        'items' => [
-            ['label' => 'Profile', 'icon' => 'fa-user', 'link' => 'profile.php'],
-            ['label' => "Helps and FAQ's", 'icon' => 'fa-circle-question', 'link' => 'faqs.php'],
-            ['label' => 'Settings', 'icon' => 'fa-gear', 'link' => 'settings.php'],
-        ]
-    ],
-];
-// change end
 
 // Services 
 $services = [
@@ -68,14 +37,6 @@ $careTips = [
 ];
 
 
-// change
-function e($value)
-{
-    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
-}
-// end
-
-
 // Turn a status label into a CSS class suffix, e.g. "On going" -> "ongoing"
 function statusClass($status)
 {
@@ -103,94 +64,16 @@ function statusClass($status)
 <body>
 
 <div class="layout">
-
-<!-- Change start -->
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-
-        <img class="imglogo"
-                        src="<?= BASE_URL ?>frontend/assets/img/coolfreeze_horizontal_logo.svg"
-                        alt="Bright living room with a grey sofa"
-                        class="card-img"
-                    >
-
-        <nav class="menu">
-
-            <!-- DASHBOARD -->
-            <p class="menu-title">Dashboard</p>
-
-            <a href="index.php" class="menu-link <?= $currentPage === 'home' ? 'active' : '' ?>">
-                <i class="fa-solid fa-house"></i>
-                Home
-            </a>
-
-            <!-- MENU SECTIONS -->
-            <?php foreach ($menu as $section): ?>
-
-                <p class="menu-title"><?= e($section['title']) ?></p>
-
-                <?php foreach ($section['items'] as $item): ?>
-
-                    <a href="<?= e($item['link']) ?>" class="menu-link">
-                        <i class="fa-solid <?= e($item['icon']) ?>"></i>
-                        <?= e($item['label']) ?>
-                    </a>
-
-                <?php endforeach; ?>
-
-            <?php endforeach; ?>
-
-        </nav>
-
-        <!-- LOGOUT -->
-        <form action="<?= BASE_URL ?>backend/api/logout.php" method="POST" class="logout-form">
-            <button type="submit" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Log out
-            </button>
-        </form>
-
-    </aside>
-    <!-- change end -->
+    <!-- Sidebar -->
+    <?php require FRONTEND_PATH . 'includes/sidebar.php' ?>
 
     <!-- MOBILE OVERLAY -->
     <div class="overlay" id="overlay"></div>
 
     <!-- MAIN CONTENT -->
     <div class="main">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-
-            <button type="button" class="menu-button" id="menuButton" aria-label="Open menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- SEARCH -->
-            <form class="search" action="search.php" method="GET">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="search" name="q" placeholder="Search">
-            </form>
-
-            <!-- TOP ACTIONS -->
-            <div class="top-actions">
-
-                <a href="notifications.php" class="icon-link" aria-label="Notifications">
-                  <i class="fa-solid fa-bell"></i>
-                </a>
-
-                <a href="cart.php" class="icon-link" aria-label="Cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-
-                <a href="profile.php" class="profile-link">
-                    <i class="fa-solid fa-user"></i>
-                    <span><?= e($userName) ?></span>
-                </a>
-
-            </div>
-
-        </header>
+        <!-- Topbar -->
+        <?php require FRONTEND_PATH . 'includes/topbar.php'?>
 
         <!-- PAGE CONTENT -->
         <main class="content">
