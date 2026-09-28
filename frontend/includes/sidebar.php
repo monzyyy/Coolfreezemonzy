@@ -36,7 +36,7 @@ $sidebarMenu = [
     [
         'title' => 'System',
         'items' => [
-            ['key' => 'profile',  'label' => 'Profile',          'icon' => 'fa-user',            'link' => 'profile.php'],
+            ['key' => 'profile',  'label' => 'Profile',          'icon' => 'fa-user',            'link' => '?page=profile_main'],
             ['key' => 'faqs',     'label' => "Helps and FAQ's",  'icon' => 'fa-circle-question', 'link' => 'faqs.php'],
             ['key' => 'settings', 'label' => 'Settings',         'icon' => 'fa-gear',            'link' => 'settings.php'],
         ],
