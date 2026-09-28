@@ -23,16 +23,11 @@ $pages = [
     'maintenance' => 'error/maintenance.php',
     'services_main' => 'main/services_main.php',
     'sample' => 'sample.php',
-<<<<<<< HEAD
-    'Myrequest' => 'main/requestpage.php',
-    'cart' => 'main/cart.php'
-=======
     'request_main' => 'main/request_main.php',
->>>>>>> ab9372fb86d49e9289c7e782e662a514a854c8ea
 ];
 
 //                        change this 'register'. pick the page in the $pages
-$page = $_GET['page'] ?? 'home_main';
+$page = $_GET['page'] ?? 'landing';
 
 if (
     !is_string($page) ||
