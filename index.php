@@ -24,6 +24,7 @@ $pages = [
     'services' => 'main/servicesmain.php',
     'sample' => 'sample.php',
     'Myrequest' => 'main/requestpage.php',
+    'cart' => 'main/cart.php'
 ];
 
 //                        change this 'register'. pick the page in the $pages

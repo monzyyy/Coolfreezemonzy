@@ -38,8 +38,8 @@
   --table-head-bg: #1e293f;
   --table-head-text: #ffffff;
 
-  --tips-grad-start: #7c4fe0;
-  --tips-grad-end: #9b5fea;
+  --tips-grad-start: #1c3f8f;
+  --tips-grad-end: #2f6fed;
   --tips-icon-bg: rgba(255, 255, 255, 0.2);
   --tips-text: rgba(255, 255, 255, 0.9);
 
@@ -3296,7 +3296,6 @@ select {
 .btn-primary:hover {
   background: var(--primary-dark);
 }
-
 
 /* =========================================================
    RESPONSIVE
