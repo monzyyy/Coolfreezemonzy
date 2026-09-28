@@ -1,7 +1,7 @@
 <?php
 // Already logged in? Skip the login page.
 if (!empty($_SESSION['customer_id'])) {
-    header('Location: ' . BASE_URL . '?page=home');
+    header('Location: ' . BASE_URL . '?page=home_main');
     exit;
 }
 ?>

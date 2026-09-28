@@ -204,15 +204,17 @@ foreach ($requests as $request) {
                         <input type="search" name="q" placeholder="Search">
                     </form>
 
-                    <button type="button" class="requests-select">
-                        <span class="muted">Sort by:</span> Name (A-Z)
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
+                    <div class="filter-container">
+                        <button type="button" class="requests-select">
+                            <span class="muted">Sort by:</span> Name (A-Z)
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
 
-                    <button type="button" class="requests-select">
-                        All Status
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
+                        <button type="button" class="requests-select">
+                            All Status
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
 
                 </div>
 
@@ -623,7 +625,7 @@ foreach ($requests as $request) {
 
 
 <script src="<?= BASE_URL ?>frontend/assets/js/custom.js"></script>
-<script>
+<script>    
     // Full request detail data, keyed by list index — rendered by PHP above.
     const REQUESTS_DATA = <?= json_encode($requestsForJs, JSON_UNESCAPED_UNICODE) ?>;
 
