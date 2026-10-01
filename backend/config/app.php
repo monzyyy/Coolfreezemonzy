@@ -1,6 +1,6 @@
 <?php
 
-define('APP_NAME', 'CoolFreeze');
+define('APP_NAME', 'cmuenrollment');
 
 $host = $_SERVER['HTTP_HOST'] ?? '';
 $host = preg_replace('/:\d+$/', '', strtolower($host));
@@ -10,9 +10,12 @@ $isLocalHost = $host === 'localhost'
 
 define('APP_ENV', $isLocalHost ? 'local' : 'production');
 
-// Detect the project's URL folder (/cool_freeze/, /coolfreeze/, or / on Hostinger),
-// no matter which script is running (index.php, backend/api/register.php, ...).
-// ROOT_PATH is defined in bootstrap.php before this file is loaded.
+/*
+ * Detect the project's URL folder.
+ * This allows the project to work on localhost
+ * and on the production server without hardcoding
+ * the project folder.
+ */
 $scriptFile = str_replace('\\', '/', realpath($_SERVER['SCRIPT_FILENAME']));
 $rootPath   = str_replace('\\', '/', realpath(ROOT_PATH));
 $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);

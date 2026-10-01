@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 3) . '/backend/bootstrap.php';
 
 // Log in name ng customer: example - markesg
 $userName = $_SESSION['username'] ?? 'Customer';
-$currentPage = 'home';
+$currentPage = 'home_main';
 
 
 // Services 

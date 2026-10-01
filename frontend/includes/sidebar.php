@@ -60,7 +60,7 @@ $sidebarMenu = [
 
         <p class="menu-title">Dashboard</p>
 
-        <a href="<?= e($sidebarPagesUrl) ?>?page=home_main" class="menu-link <?= $currentPage === 'home' ? 'active' : '' ?>">
+        <a href="<?= e($sidebarPagesUrl) ?>?page=home_main" class="menu-link <?= $currentPage === 'home_main' ? 'active' : '' ?>">
             <i class="fa-solid fa-house"></i>
             Home
         </a>

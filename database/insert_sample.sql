@@ -9,12 +9,18 @@
 -- login form locally.
 -- =========================================================
 
-use coolfreeze_db
+USE cmuenrollment_db;
 
-INSERT INTO customers (username, email, phone, password_hash, agreed_to_terms) VALUES
-('mark_borito', 'mark.borito@example.com', '09171234567', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1),
-('richmond_quizon',  'richmond.quizon@example.com',  '09179876543', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1),
-('christian_repol',   'christian.repol@example.com',   '09203119233', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1),
-('matt_legaspi',   'matt.legaspi@example.com',   '09205116233', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1),
-('mark_esguerra',   'mark.esguerra@example.com',   '09207117233', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1),
-('mikaela_bernardo',   'mikaela.bernardo@example.com',   '09209912235', '$2b$12$m7OQpQQmOdVFXGq/hi3Qg.cEqviZwSqlBhtPXmVzAp37GCqbsZn7S', 1);
+INSERT INTO students (
+    student_number,
+    first_name,
+    middle_name,
+    last_name,
+    program,
+    year_level,
+    block_section,
+    email,
+    phone,
+    password_hash,
+    enrollment_status
+) VALUES ('202400924','Ronald',NULL,'Pineda','BSIT',3,'D','ronaldpineda642@gmail.com','09122241752','ronaldzz122','Enrolled');

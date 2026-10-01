@@ -1,143 +1,88 @@
 <?php
-// Already logged in? Skip the login page.
-if (!empty($_SESSION['customer_id'])) {
+
+if (!empty($_SESSION['student_id'])) {
     header('Location: ' . BASE_URL . '?page=home_main');
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Account | CoolFreeze</title>
+  <title>Login | CMU Enrollment System</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <script src="<?= BASE_URL . 'frontend/assets/js/eye-password.js' ?>"></script>
   <link rel="stylesheet" href="<?= BASE_URL . 'frontend/assets/css/font-style.css' ?>">
 </head>
 
-<body class="h-dvh overflow-hidden bg-white text-gray-900 antialiased">
+<body class="min-h-screen bg-cover bg-center bg-no-repeat text-[#0b2a4f]"
+      style="background-image: url('<?= BASE_URL . 'frontend/assets/img/cmu.png' ?>');">
 
-  <div class="flex h-full flex-col md:flex-row">
+  <main class="flex min-h-screen items-center justify-center p-4">
 
-    <!-- LEFT SIDE: form -->
-    <div class="flex h-full w-full overflow-y-auto px-5 py-4 sm:px-8 md:w-1/2 md:px-10 lg:px-14">
-      <div class="m-auto w-full max-w-lg">
+    <!-- Glass card -->
+    <section class="w-full max-w-sm rounded-2xl border border-white/40 bg-white/30 p-6 shadow-xl backdrop-blur-md">
 
-        <h2 class="mb-2 text-xl font-bold text-blue-600 md:hidden">COOLFREEZE</h2>
+      <!-- Top row: back + register -->
+      <div class="flex items-center justify-between text-xs">
+        <a href="<?= BASE_URL ?>" aria-label="Go back"
+           class="rounded p-1 text-base hover:bg-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+      </div>
 
-        <div class="mb-3 flex items-center justify-between gap-3">
-          <a href="<?= BASE_URL ?>?page=landing" class="inline-flex" aria-label="Back to landing">
-            <img class="h-6 w-6" src="<?= BASE_URL . 'frontend/assets/img/back-arrow.svg' ?>" alt="Back">
+      <!-- Heading -->
+      <h1 class="mt-6 text-3xl font-bold">Welcome Back!</h1>
+      <p class="mt-1 text-xs">Log in to your account to continue to the CMU Enrollment System</p>
+
+      <!-- Form message (success / error) -->
+      <div id="form-message" class="mt-4 hidden rounded-lg px-3 py-2 text-sm" role="alert"></div>
+
+      <form id="login-form" action="<?= BASE_URL . 'backend/auth/login.php' ?>" method="POST" class="mt-4" novalidate>
+
+        <!-- Student number -->
+        <label for="student_number" class="block text-sm font-semibold">Student Number</label>
+        <div class="mt-1.5 flex items-center gap-3 rounded-lg bg-blue-50/90 px-3 focus-within:ring-2 focus-within:ring-blue-600">
+          <i class="bi bi-person-badge text-lg"></i>
+          <input type="text" id="student_number" name="student_number" autocomplete="username"
+                 autocapitalize="off" spellcheck="false" required
+                 placeholder="Enter your student number"
+                 class="w-full bg-transparent py-3 text-sm placeholder:text-slate-500 focus:outline-none">
+        </div>
+        <p class="field-error mt-1 hidden text-xs text-red-700" data-for="student_number"></p>
+
+        <!-- Password -->
+        <label for="password" class="mt-4 block text-sm font-semibold">Password</label>
+        <div class="mt-1.5 flex items-center gap-3 rounded-lg bg-blue-50/90 px-3 focus-within:ring-2 focus-within:ring-blue-600">
+          <i class="bi bi-key text-lg"></i>
+          <input type="password" id="password" name="password" autocomplete="current-password" required
+                 placeholder="Enter your password"
+                 class="w-full bg-transparent py-3 text-sm placeholder:text-slate-500 focus:outline-none">
+        </div>
+        <p class="field-error mt-1 hidden text-xs text-red-700" data-for="password"></p>
+
+        <!-- Remember me / Forgot password -->
+        <div class="mt-3 flex items-center justify-between text-xs">
+          <a href="<?= BASE_URL . '?page=forgot_password' ?>"
+             class="text-blue-600 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
+            Forgot Password?
           </a>
-          <small class="text-sm text-gray-500">
-            Don't have an account?
-            <a href="<?= BASE_URL ?>?page=register" class="text-blue-600 hover:underline">Register</a>
-          </small>
         </div>
 
-        <h2 class="text-2xl font-bold">Welcome Back!</h2>
+        <!-- Submit -->
+        <button type="submit"
+                class="mt-5 w-full rounded-lg bg-blue-50 py-3 text-sm font-bold text-[#0b2a4f] transition hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-60">
+          Log in
+        </button>
+      </form>
 
-        <p class="mt-1 text-sm text-gray-500">
-          Log in to your account to continue to CoolFreeze
-        </p>
+    </section>
+  </main>
 
-        <!-- NEW: general message area -->
-        <div id="form-message" class="mt-3 hidden rounded-md p-3 text-sm"></div>
-
-        <!-- CHANGED: id, real action, novalidate -->
-        <form
-          id="login-form"
-          class="mt-4 space-y-3"
-          method="post"
-          action="<?= BASE_URL . 'backend/api/login.php' ?>"
-          novalidate
-        >
-
-          <div>
-            <label for="email" class="mb-1 block text-sm font-bold">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              autocomplete="email"
-              required
-              class="w-full rounded-md bg-gray-100 px-3 py-2 text-base outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email address"
-            >
-            <p class="field-error mt-1 hidden text-xs text-red-600" data-for="email"></p>
-          </div>
-
-          <div>
-            <label for="password" class="mb-1 block text-sm font-bold">Password</label>
-            <div class="relative">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="current-password"
-                required
-                class="w-full rounded-md bg-gray-100 px-3 py-2 pr-10 text-base outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your password"
-              >
-              <i class="bi bi-eye toggle-password absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
-                data-target="password"></i>
-            </div>
-            <p class="field-error mt-1 hidden text-xs text-red-600" data-for="password"></p>
-          </div>
-
-          <div class="flex items-center justify-between gap-3 text-sm">
-            <div class="flex items-center gap-2">
-              <input
-                class="h-4 w-4 shrink-0 rounded border-gray-300 accent-blue-600"
-                type="checkbox"
-                id="remember"
-                name="remember"
-              >
-              <label for="remember">Remember me</label>
-            </div>
-
-            <a href="<?= BASE_URL ?>?page=forget" class="text-blue-600 hover:underline">Forgot password?</a>
-          </div>
-
-          <button
-            type="submit"
-            class="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            Login
-          </button>
-        </form>
-
-      </div>
-    </div>
-
-
-    <!-- RIGHT SIDE: image -->
-    <div class="relative hidden h-full overflow-hidden md:block md:w-1/2">
-      <img
-        src="<?= BASE_URL . 'frontend/assets/img/login_register_background.jpg' ?>"
-        class="absolute inset-0 h-full w-full object-cover -scale-x-100"
-        alt=""
-      >
-
-      <div class="absolute right-0 top-0 flex flex-col items-end p-6 text-right lg:p-10">
-        <h2 class="text-xl font-bold text-blue-600 lg:text-2xl">COOLFREEZE</h2>
-        <h1 class="mt-[3vh] text-[clamp(1.75rem,min(4vw,6vh),3rem)] font-bold leading-tight text-gray-900">
-          Stay Cool,<br>
-          Stay Comfortable
-        </h1>
-        <p class="mt-2 max-w-sm text-sm text-gray-600 lg:text-base">
-          Quality air conditioning products and professional services
-          for your home and business.
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- NEW: AJAX submit -->
+  <!-- AJAX submit -->
   <script>
   $(function () {
     const $form = $('#login-form');
@@ -181,7 +126,7 @@ if (!empty($_SESSION['customer_id'])) {
           showMessage(res.message || 'Network error. Please try again.', false);
         }
         $('#password').val('');
-        $btn.prop('disabled', false).text('Login');
+        $btn.prop('disabled', false).text('Log in');
       });
     });
 
@@ -190,7 +135,7 @@ if (!empty($_SESSION['customer_id'])) {
       if (e.originalEvent.persisted) {
         $form[0].reset();
         clearErrors();
-        $btn.prop('disabled', false).text('Login');
+        $btn.prop('disabled', false).text('Log in');
       }
     });
   });

@@ -1,71 +1,143 @@
 <?php
-require_once __DIR__ . '/../bootstrap.php';
-require_once __DIR__ . '/../models/customer.php';
 
-ini_set('display_errors', '0');   // API must return clean JSON only
+require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../models/student.php';
+
+ini_set('display_errors', '0');
 header('Content-Type: application/json');
 
-function respond(array $data, int $code = 200): never {
+
+function respond(array $data, int $code = 200): never
+{
     http_response_code($code);
     echo json_encode($data);
     exit;
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    respond(['success' => false, 'message' => 'Method not allowed.'], 405);
+    respond([
+        'success' => false,
+        'message' => 'Method not allowed.'
+    ], 405);
 }
 
-// Basic throttle: 5 failed attempts locks this session for 5 minutes
-if (!empty($_SESSION['login_locked_until']) && time() < $_SESSION['login_locked_until']) {
-    respond(['success' => false, 'message' => 'Too many attempts. Please try again in a few minutes.'], 429);
+
+if (
+    !empty($_SESSION['login_locked_until']) &&
+    time() < $_SESSION['login_locked_until']
+) {
+    respond([
+        'success' => false,
+        'message' => 'Too many attempts. Please try again in a few minutes.'
+    ], 429);
 }
 
-$email    = strtolower(trim($_POST['email'] ?? ''));
+
+$student_number = trim($_POST['student_number'] ?? '');
 $password = $_POST['password'] ?? '';
 
+
 $errors = [];
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = 'Enter a valid email address.';
+
+
+if ($student_number === '') {
+    $errors['student_number'] = 'Enter your student number.';
 }
+
+
 if ($password === '') {
     $errors['password'] = 'Enter your password.';
 }
+
+
 if ($errors) {
-    respond(['success' => false, 'errors' => $errors], 422);
+    respond([
+        'success' => false,
+        'errors' => $errors
+    ], 422);
 }
 
-try {
-    $customer = customer_find_by_email($conn, $email);
 
-    if ($customer) {
-        $valid = password_verify($password, $customer['password_hash']);
+try {
+
+    $student = student_find_by_number($conn, $student_number);
+
+
+    if ($student) {
+
+        $valid = password_verify(
+            $password,
+            $student['password_hash']
+        );
+
     } else {
-        password_hash($password, PASSWORD_DEFAULT);   // same cost as verify, so timing doesn't reveal unknown emails
+
+        password_hash($password, PASSWORD_DEFAULT);
         $valid = false;
     }
 
+
     if (!$valid) {
-        $_SESSION['login_attempts'] = ($_SESSION['login_attempts'] ?? 0) + 1;
+
+        $_SESSION['login_attempts'] =
+            ($_SESSION['login_attempts'] ?? 0) + 1;
+
+
         if ($_SESSION['login_attempts'] >= 5) {
+
             $_SESSION['login_locked_until'] = time() + 300;
             $_SESSION['login_attempts'] = 0;
         }
-        // Same message for wrong email or wrong password
-        respond(['success' => false, 'message' => 'Invalid email or password.'], 401);
+
+
+        respond([
+            'success' => false,
+            'message' => 'Invalid student number or password.'
+        ], 401);
     }
 
-    // Success
-    session_regenerate_id(true);   // prevents session fixation
-    unset($_SESSION['login_attempts'], $_SESSION['login_locked_until']);
-    $_SESSION['customer_id'] = (int) $customer['customer_id'];
-    $_SESSION['username']    = $customer['username'];
+
+    session_regenerate_id(true);
+
+
+    unset(
+        $_SESSION['login_attempts'],
+        $_SESSION['login_locked_until']
+    );
+
+
+    $_SESSION['student_id'] =
+        (int) $student['student_id'];
+
+
+    $_SESSION['student_number'] =
+        $student['student_number'];
+
+
+    $_SESSION['student_name'] =
+        trim(
+            $student['first_name'] . ' ' .
+            ($student['middle_name']
+                ? $student['middle_name'] . ' '
+                : '') .
+            $student['last_name']
+        );
+
 
     respond([
-        'success'  => true,
-        'message'  => 'Login successful! Redirecting...',
-        'redirect' => BASE_URL . '?page=home',
+        'success' => true,
+        'message' => 'Login successful! Redirecting...',
+        'redirect' => BASE_URL . '?page=home_main'
     ]);
+
+
 } catch (mysqli_sql_exception $e) {
+
     error_log($e->getMessage());
-    respond(['success' => false, 'message' => 'Something went wrong. Please try again.'], 500);
-}
+
+    respond([
+        'success' => false,
+        'message' => 'Something went wrong. Please try again.'
+    ], 500);
+}   
